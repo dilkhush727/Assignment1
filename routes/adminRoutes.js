@@ -63,10 +63,15 @@ router.post("/skills/add", async (req, res) => {
     }
 });
 router.get("/skills/api", async (req, res) => {
-    const skills = await Skill.find();
-    
-    res.json(projects);
+    try {
+        const skills = await Skill.find();
+        res.json(skills);
+    } catch (err) {
+        console.error("Error fetching skills:", err);
+        res.status(500).json({ error: "Failed to fetch skills" });
+    }
 });
+
 
 // Route to delete a project
 router.post("/projects/delete/:id", async (req, res) => {
